@@ -4,6 +4,11 @@ public class User {
 
 	public String username;
 	
+	@Override
+	public String toString() {
+		return username;
+	}
+	
 	public User() {
 		
 	}
@@ -12,6 +17,7 @@ public class User {
 		super();
 		this.username=username;
 	}
+	
 	public String getusername() {
 		return username;
 	}

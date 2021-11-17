@@ -9,8 +9,8 @@ public class loginService {
 	
 	HashMap<String,User>user = new HashMap<>();
 	
-	public void getUser(){
-		    System.out.println(user);
+	public HashMap<String, User> getUser(){
+		    return user;
 		}
 	
 	public void addUser(User userx){

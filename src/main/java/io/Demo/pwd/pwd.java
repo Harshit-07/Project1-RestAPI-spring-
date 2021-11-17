@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class pwd {
 
-	@RequestMapping("/pwd")
+	@RequestMapping("/restapi/pwd")
 	public String pwd() {
 	String pwd = System.getProperty("user.dir");
     	return pwd;
