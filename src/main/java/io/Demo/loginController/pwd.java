@@ -12,16 +12,18 @@ public class pwd {
 		return "Error : Pass a token in the header for authorization\n";
 	}
 	
-	@RequestMapping("/restapi/pwd/{token}")
-	public String presentDir(@PathVariable String token) {
-		if(token.equals(tempVar.str)) 
-		{
-		String pwd = System.getProperty("user.dir");
-	    return "pwd :"+ pwd +"\n";
-		}
-		else {	
+	@RequestMapping("/restapi/pwd/{userToken}")
+	public String presentDir(@PathVariable String userToken,Token token) {
+		String n = token.getToken();
+		System.out.print(n);
+//		if(userToken.equals(token)) 
+//		{
+//		String pwd = System.getProperty("user.dir");
+//	    return "pwd :"+ pwd +"\n";
+//		}
+//		else {	
 			return "Error : Token Invalid\n"; 
-		}
+//		}
 	}
 	
 }

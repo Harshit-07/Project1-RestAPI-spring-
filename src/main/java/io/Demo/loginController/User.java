@@ -4,15 +4,11 @@ public class User {
 
 	public String username;
 	public String token;
-	
+	public String cwd;
 
-	public String getToken(String str) {
-		
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
+	public String updateToken(String tokenx) {
+		token=tokenx;
+		return token; 
 	}
 
 	@Override
@@ -35,6 +31,11 @@ public class User {
 	}
 	public void setusername(String username) {
 		this.username = username;
+	}
+
+	public String homePath(String cwdx) {
+		cwd=cwdx;
+		return cwd;
 	}
 	
 }
