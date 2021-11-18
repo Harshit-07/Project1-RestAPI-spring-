@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class loginController {
 	
+	final String basePath="/home/user";
+	
 	@Autowired
 	private loginService loginservice;
 	
@@ -23,10 +25,11 @@ public class loginController {
 	
 	@RequestMapping(method=RequestMethod.POST,value="/restapi/login")
 	public void login(@RequestBody User user) {
+			String username=user.getusername();
+			String cwd = username+basePath;
 		 	UUID randomString = UUID.randomUUID();
-		 	tempVar.str= randomString.toString();
-		    System.out.println("random key generated :" +randomString);
+		 	String rString =randomString.toString();
+		 	System.out.println("Token :" +randomString);
 		    loginservice.addUser(user); 
 	}
-	
 }
