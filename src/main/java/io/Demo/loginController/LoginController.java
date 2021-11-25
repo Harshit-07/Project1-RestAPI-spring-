@@ -3,8 +3,11 @@ package io.Demo.loginController;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,17 +19,26 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LoginController {
  
+	Logger logger = LoggerFactory.getLogger(LoginService.class);
+	
+	final static String CWD = "cwd";
+	final static String CD = "cd";
+	final static String LOGIN = "login";
+	final static String PWD = "pwd";
+	final static String RESULT = "Logout successfull,your token is Unauthorized!";
+	
 	@Autowired
 	private LoginService loginService;
 	
 	@RequestMapping("/restapi/login")
 	public HashMap<String,User> getMap() {
+		logger.info("All users : "+LoginService.getUser().toString());
 		return LoginService.getUser();
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/restapi/login")
-	public JsonToken login(@RequestBody User user) throws IOException{
-		JsonToken json = new JsonToken();
+	public JsonConverter login(@RequestBody User user) throws IOException{
+		JsonConverter json = new JsonConverter();
 		UUID uuid = UUID.randomUUID();
 		String uuidToString = uuid.toString();
 		user.setToken(uuidToString);
@@ -34,17 +46,16 @@ public class LoginController {
 		
 		//creating Directories and files
 		String path = User.baseDir + "/" + user.getUsername();
-//		System.out.println(user.getUsername());
 		user.setPwd(path);
 		File f1 = new File(path);
 		f1.mkdir();
-		String userDetailsPath = path + "/" + user.getUsername() + " PersonalDetails";
+		String userDetailsPath = path + "/" + user.getUsername() + "PersonalDetails";
 		File f2 = new File(userDetailsPath);
 		f2.mkdir();
-		String userPhotosPath = path + "/" + user.getUsername() + " Photos";  
+		String userPhotosPath = path + "/" + user.getUsername() + "Photos";  
 		File f3 = new File(userPhotosPath);
 		f3.mkdir();
-		String userPasswordPath = path + "/" + user.getUsername() + "Password.txt";
+		String userPasswordPath = path + "/" + user.getUsername() + "Password";
 		File f4 = new File(userPasswordPath);
 		f4.createNewFile();
 		String userBankDetailsPath = path + "/" + user.getUsername() + "BankDetails.txt";
@@ -52,36 +63,43 @@ public class LoginController {
 		f5.createNewFile();
 		
 		loginService.addUser(user);
-		json.setToken(uuidToString);
+		json.setRequest(LOGIN);
+		json.setResult(uuidToString);
 		return json;
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE,value="/restapi/logout")
 	public String logout(@RequestHeader(value="Authorization") String token) {
+		logger.info("User logged out");
 		loginService.deleteUser(token);
-		return "logout successfull,your token is unauthourized";
+		return RESULT;
 	}
 	
 	@RequestMapping("/restapi/cwd")
-	public JsonCwd presentDir(@RequestHeader(value="Authorization") String token) {
+	public JsonConverter presentDir(@RequestHeader(value="Authorization") String token) {
 		String pwd = loginService.getDir(token);
-		JsonCwd json = new JsonCwd();
-		json.setCwd(pwd);
+		JsonConverter json = new JsonConverter();
+		json.setRequest(CWD);
+		json.setResult(pwd);
+		logger.info(json.toString());
 		return json;
 	}
 		
 	@RequestMapping("/restapi/ls")
-	public JsonLs listAllFiles(@RequestHeader(value="Authorization") String token) {
-		JsonLs json = new JsonLs();
-		String str = loginService.getLs(token);
+	public JsonLs2 listAllFiles(@RequestHeader(value="Authorization") String token) {
+		List<JsonLs> str = loginService.getLs(token);
+		JsonLs2 json = new JsonLs2();
 		json.setLs(str);
-		return json;
+		logger.info(json.toString());
+	  	return json;
 	}
+	
 	@RequestMapping("/restapi/cd/{dirName}")
-	public JsonCd changeDirectory(@RequestHeader(value="Authorization") String token, @PathVariable String dirName) {
-		JsonCd json= new JsonCd();
+	public JsonConverter changeDirectory(@RequestHeader(value="Authorization") String token, @PathVariable String dirName) {
+		JsonConverter json= new JsonConverter();
 		String str = loginService.changeDir(dirName,token);
-		json.setCd(str);
+		json.setRequest(CD);
+		json.setResult(str);
 		return json;
 	}
 	

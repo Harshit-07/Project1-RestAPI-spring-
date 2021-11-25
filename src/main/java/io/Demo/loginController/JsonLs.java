@@ -1,18 +1,33 @@
 package io.Demo.loginController;
 
+import java.io.File;
+
 public class JsonLs {
-	String ls;
-	public String getLs() {
-		return ls;
+	File name;
+	String type;
+	@Override
+	public String toString() {
+		return "JsonLs [name=" + name + ", type=" + type + "]";
 	}
-	public void setLs(String ls) {
-		this.ls = ls;
+	public File getName() {
+		return name;
+	}
+	public void setName(File name) {
+		this.name = name;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	public JsonLs() {
 		
 	}
-	public JsonLs(String ls) {
+	public JsonLs(File name, String type) {
 		super();
-		this.ls=ls;
+		this.name = name;
+		this.type = type;
 	}
+
 }
