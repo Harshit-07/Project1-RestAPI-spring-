@@ -1,18 +1,17 @@
 package io.Demo.loginController;
 
-import java.io.File;
 
 public class JsonLs {
-	File name;
+	String name;
 	String type;
 	@Override
 	public String toString() {
 		return "JsonLs [name=" + name + ", type=" + type + "]";
 	}
-	public File getName() {
+	public String getName() {
 		return name;
 	}
-	public void setName(File name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 	public String getType() {
@@ -24,7 +23,7 @@ public class JsonLs {
 	public JsonLs() {
 		
 	}
-	public JsonLs(File name, String type) {
+	public JsonLs(String name, String type) {
 		super();
 		this.name = name;
 		this.type = type;

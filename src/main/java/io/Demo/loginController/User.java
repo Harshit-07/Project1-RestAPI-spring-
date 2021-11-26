@@ -1,17 +1,30 @@
 package io.Demo.loginController;
 
 public class User {
+	
 	static final String baseDir="/home/user";
 	
 	private String token;
 	private String homeDir;
 	private String pwd;
-	private  String username;
+	private String username;
+	
+	public User(String username, String token, String homeDir, String pwd) {
+		super();
+		this.username = username;
+		this.token = token;
+		this.homeDir = homeDir;
+		this.pwd = pwd;
+	}
+	public User() {
+		
+	}
 	
 	@Override
 	public String toString() {
 		return "User [username=" + username + ", token=" + token + ", homeDir=" + homeDir + ", pwd=" + pwd + "]";
 	}
+	
 	public String getUsername() {
 		return username;
 	}
@@ -36,19 +49,4 @@ public class User {
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
-	
-	public User(String username, String token, String homeDir, String pwd) {
-		super();
-		this.username = username;
-		this.token = token;
-		this.homeDir = homeDir;
-		this.pwd = pwd;
-	}
-	public User() {
-		
-	}
-	
-	
-	
-	
 }
