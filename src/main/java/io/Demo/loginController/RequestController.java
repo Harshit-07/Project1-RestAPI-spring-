@@ -21,12 +21,12 @@ public class RequestController {
  
 	Logger logger = LoggerFactory.getLogger(RequestService.class);
 	
-	final static String CWD = "cwd";
-	final static String CD = "cd";
-	final static String LOGIN = "login";
-	final static String LS = "ls";
+	final static String CWD = "cwd : ";
+	final static String CD = "cd : ";
+	final static String LOGIN = "login : ";
+	final static String LS = "ls : ";
 	final static String RESULT = "Logout successfull,your token is Unauthorized!";
-	final static String USERS = "All users";
+	final static String USERS = "All users : ";
 	
 	@Autowired
 	private RequestService requestService;
@@ -65,7 +65,7 @@ public class RequestController {
 		
 		requestService.addUser(user);
 		json.settoken(uuidToString);
-		logger.info(LOGIN+json.toString());
+		logger.info(LOGIN+uuidToString);
 		return json;
 	}
 	
@@ -81,7 +81,7 @@ public class RequestController {
 		String pwd = requestService.getDir(token);
 		JsonCwd json = new JsonCwd();
 		json.setCwd(pwd);
-		logger.info(CWD+json.toString());
+		logger.info(CWD+pwd);
 		return json;
 	}
 		
@@ -90,7 +90,7 @@ public class RequestController {
 		List<JsonLs> str = requestService.getLs(token);
 		JsonLs2 json = new JsonLs2();
 		json.setLs(str);
-		logger.info(LS+json.toString());
+		logger.info(LS+str);
 	  	return json;
 	}
 	
@@ -99,7 +99,7 @@ public class RequestController {
 		JsonCd json= new JsonCd();
 		String str = requestService.changeDir(dirName,token);
 		json.setCd(str);
-		logger.info(CD+json.toString());
+		logger.info(CD+str);
 		return json;
 	}
 	
